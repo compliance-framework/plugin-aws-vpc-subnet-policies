@@ -1,1 +1,31 @@
-{}
+{
+  "required_subnet_tags": [
+    "Environment",
+    "Owner",
+    "compliance",
+    "confidentiality"
+  ],
+  "allow_subnet_public_ip_on_launch": false,
+  "approved_subnet_flow_log_statuses": [
+    "ACTIVE"
+  ],
+  "required_subnet_flow_log_traffic_types": [
+    "ALL"
+  ],
+  "privacy_subnet_tag_keys": [
+    "data-classification",
+    "classification",
+    "confidentiality"
+  ],
+  "privacy_subnet_tag_values": [
+    "personal",
+    "pii",
+    "confidential",
+    "restricted"
+  ],
+  "allow_privacy_subnet_public_routes": false,
+  "approved_subnet_states": [
+    "available"
+  ],
+  "minimum_available_ip_address_percentage": 10
+}
