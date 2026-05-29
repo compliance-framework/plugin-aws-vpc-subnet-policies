@@ -1,5 +1,45 @@
 package compliance_framework.deny_privacy_public_routes
 
+risk_templates := [{
+	"name": "Privacy-scoped subnet has direct public internet routing",
+	"title": "Privacy Data Network Path Exposure",
+	"statement": "A subnet identified as privacy-scoped that routes default IPv4 or IPv6 traffic directly to an internet gateway may expose systems handling personal or restricted information to unintended public network paths. This can increase the likelihood of unauthorized access paths or sensitive information exposure if other network controls are incomplete or misconfigured.",
+	"likelihood_hint": "medium",
+	"impact_hint": "high",
+	"violation_ids": ["subnet_privacy_public_route"],
+	"threat_refs": [
+		{
+			"system": "https://cwe.mitre.org",
+			"external_id": "CWE-200",
+			"title": "Exposure of Sensitive Information to an Unauthorized Actor",
+			"url": "https://cwe.mitre.org/data/definitions/200.html"
+		},
+		{
+			"system": "https://cwe.mitre.org",
+			"external_id": "CWE-668",
+			"title": "Exposure of Resource to Wrong Sphere",
+			"url": "https://cwe.mitre.org/data/definitions/668.html"
+		},
+		{
+			"system": "https://cwe.mitre.org",
+			"external_id": "CWE-284",
+			"title": "Improper Access Control",
+			"url": "https://cwe.mitre.org/data/definitions/284.html"
+		}
+	],
+	"remediation": {
+		"title": "Remove direct public routing from privacy-scoped subnets",
+		"description": "Route privacy-scoped workloads through approved private or controlled egress paths and remove direct default routes to internet gateways unless an approved exception exists.",
+		"tasks": [
+			{"title": "Review the subnet route table for default routes to internet gateways"},
+			{"title": "Move privacy-scoped workloads to private subnets where direct public internet routing is not present"},
+			{"title": "Use NAT, VPC endpoints, private connectivity, or controlled ingress layers for required access paths"},
+			{"title": "Validate security groups and NACLs for workloads remaining in internet-routed subnets"},
+			{"title": "Document and approve any exception that allows direct public routing for privacy-scoped workloads"}
+		]
+	}
+}]
+
 privacy_tag_key(key) if {
 	configured := data.privacy_subnet_tag_keys[_]
 	lower(key) == lower(configured)
@@ -47,7 +87,7 @@ privacy_public_route[route] if {
 	public_internet_route(route)
 }
 
-violation[{}] if {
+violation[{"id": "subnet_privacy_public_route"}] if {
 	count(privacy_public_route) > 0
 }
 
