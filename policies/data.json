@@ -9,6 +9,9 @@
   "approved_subnet_flow_log_statuses": [
     "ACTIVE"
   ],
+  "approved_subnet_flow_log_delivery_statuses": [
+    "SUCCESS"
+  ],
   "required_subnet_flow_log_traffic_types": [
     "ALL"
   ],

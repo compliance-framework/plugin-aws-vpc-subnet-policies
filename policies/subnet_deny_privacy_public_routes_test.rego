@@ -18,6 +18,13 @@ test_violation_privacy_subnet_public_ipv4_route if {
 	}
 }
 
+test_no_violation_privacy_subnet_blackhole_public_ipv4_route if {
+	count(violation) == 0 with input as {
+		"subnet": {"Tags": [{"Key": "data-classification", "Value": "personal"}]},
+		"subnet_context": {"route_table_for_subnet": {"Routes": [{"DestinationCidrBlock": "0.0.0.0/0", "GatewayId": "igw-123", "State": "blackhole"}]}}
+	}
+}
+
 test_violation_privacy_subnet_public_ipv6_route if {
 	count(violation) == 1 with input as {
 		"subnet": {"Tags": [{"Key": "confidentiality", "Value": "restricted"}]},

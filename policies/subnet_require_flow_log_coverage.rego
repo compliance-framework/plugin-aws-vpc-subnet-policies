@@ -38,9 +38,15 @@ required_flow_log_traffic_type(traffic_type) if {
 	upper(traffic_type) == upper(required)
 }
 
+approved_flow_log_delivery_status(status) if {
+	approved := data.approved_subnet_flow_log_delivery_statuses[_]
+	upper(status) == upper(approved)
+}
+
 flow_log_approved(flow_log) if {
 	approved_flow_log_status(object.get(flow_log, "FlowLogStatus", ""))
 	required_flow_log_traffic_type(object.get(flow_log, "TrafficType", ""))
+	approved_flow_log_delivery_status(object.get(flow_log, "DeliverLogsStatus", ""))
 }
 
 vpc_flow_log_coverage if {
@@ -59,4 +65,4 @@ violation[{"id": "subnet_flow_log_coverage_missing"}] if {
 }
 
 title := "Subnet should have flow log coverage"
-description := sprintf("Subnet should be covered by VPC or subnet flow logs with approved statuses: %s and traffic types: %s", [concat(", ", data.approved_subnet_flow_log_statuses), concat(", ", data.required_subnet_flow_log_traffic_types)])
+description := sprintf("Subnet should be covered by VPC or subnet flow logs with approved statuses: %s, delivery statuses: %s, and traffic types: %s", [concat(", ", data.approved_subnet_flow_log_statuses), concat(", ", data.approved_subnet_flow_log_delivery_statuses), concat(", ", data.required_subnet_flow_log_traffic_types)])

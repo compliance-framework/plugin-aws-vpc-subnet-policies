@@ -68,12 +68,18 @@ internet_gateway_target(route) if {
 	startswith(object.get(route, "GatewayId", ""), "igw-")
 }
 
+active_route(route) if {
+	lower(object.get(route, "State", "active")) == "active"
+}
+
 public_internet_route(route) if {
+	active_route(route)
 	public_ipv4_destination(object.get(route, "DestinationCidrBlock", ""))
 	internet_gateway_target(route)
 }
 
 public_internet_route(route) if {
+	active_route(route)
 	public_ipv6_destination(object.get(route, "DestinationIpv6CidrBlock", ""))
 	internet_gateway_target(route)
 }
