@@ -3,3 +3,8 @@ Pass 1 (core, rego-policy rules): approve, no findings. Diff is opa fmt output, 
 unresolved-reference ignores for data.json keys, the count -> available rename (var-shadows-builtin),
 and the workflow swap. Pre-existing Rego issues (violation[{}] without ids, no METADATA, package names
 not matching file stems) are out of scope for this task and listed in the PR body instead.
+
+lisa-design:
+Fix Regal errors only (user decision 2026-10-13); warnings are left as they are (44, same as master).
+data.json key references are silenced with trailing line-scoped ignores, no repo .regal config, so CI
+keeps the shared config. Default branch is master, so ci.yml pushes on [master].
