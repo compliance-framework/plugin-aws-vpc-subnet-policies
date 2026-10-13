@@ -1,0 +1,2 @@
+lisa-selfreview:
+Pass 1 (ccf-review packs core, rego-policy): approve, no findings. Callers copied from mock-plugin-policies-1 (identical to merged plugin-local-ssh-policies#14), pins 6e7fc9c # v1.5.2, push triggers [master]; config keys equal release-please/defaults.json at v1.5.2; actionlint v1.7.12 clean; OPA 1.14.1 check/test (33/33) pass; old and new opa build bundles identical (policies/ only).
