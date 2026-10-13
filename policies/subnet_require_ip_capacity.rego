@@ -47,12 +47,12 @@ cidr_total_ipv4_address_counts := {
 	"32": 1,
 }
 
-available_ip_count := count if {
-	count := input.subnet.AvailableIpAddressCount
+available_ip_count := available if {
+	available := input.subnet.AvailableIpAddressCount
 }
 
-available_ip_count := count if {
-	count := input.subnet_context.current.available_ip_address_count
+available_ip_count := available if {
+	available := input.subnet_context.current.available_ip_address_count
 }
 
 available_ip_percentage := percentage if {
@@ -62,8 +62,8 @@ available_ip_percentage := percentage if {
 }
 
 violation[{}] if {
-	available_ip_percentage < data.minimum_available_ip_address_percentage
+	available_ip_percentage < data.minimum_available_ip_address_percentage # regal ignore:unresolved-reference
 }
 
 title := "Subnet should maintain available IP address capacity"
-description := sprintf("Subnet should have at least %v%% available IPv4 address capacity based on raw CIDR size", [data.minimum_available_ip_address_percentage])
+description := sprintf("Subnet should have at least %v%% available IPv4 address capacity based on raw CIDR size", [data.minimum_available_ip_address_percentage]) # regal ignore:unresolved-reference
