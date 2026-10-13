@@ -12,20 +12,20 @@ risk_templates := [{
 			"system": "https://cwe.mitre.org",
 			"external_id": "CWE-200",
 			"title": "Exposure of Sensitive Information to an Unauthorized Actor",
-			"url": "https://cwe.mitre.org/data/definitions/200.html"
+			"url": "https://cwe.mitre.org/data/definitions/200.html",
 		},
 		{
 			"system": "https://cwe.mitre.org",
 			"external_id": "CWE-668",
 			"title": "Exposure of Resource to Wrong Sphere",
-			"url": "https://cwe.mitre.org/data/definitions/668.html"
+			"url": "https://cwe.mitre.org/data/definitions/668.html",
 		},
 		{
 			"system": "https://cwe.mitre.org",
 			"external_id": "CWE-284",
 			"title": "Improper Access Control",
-			"url": "https://cwe.mitre.org/data/definitions/284.html"
-		}
+			"url": "https://cwe.mitre.org/data/definitions/284.html",
+		},
 	],
 	"remediation": {
 		"title": "Remove direct public routing from privacy-scoped subnets",
@@ -35,18 +35,18 @@ risk_templates := [{
 			{"title": "Move privacy-scoped workloads to private subnets where direct public internet routing is not present"},
 			{"title": "Use NAT, VPC endpoints, private connectivity, or controlled ingress layers for required access paths"},
 			{"title": "Validate security groups and NACLs for workloads remaining in internet-routed subnets"},
-			{"title": "Document and approve any exception that allows direct public routing for privacy-scoped workloads"}
-		]
-	}
+			{"title": "Document and approve any exception that allows direct public routing for privacy-scoped workloads"},
+		],
+	},
 }]
 
 privacy_tag_key(key) if {
-	configured := data.privacy_subnet_tag_keys[_]
+	configured := data.privacy_subnet_tag_keys[_] # regal ignore:unresolved-reference
 	lower(key) == lower(configured)
 }
 
 privacy_tag_value(value) if {
-	configured := data.privacy_subnet_tag_values[_]
+	configured := data.privacy_subnet_tag_values[_] # regal ignore:unresolved-reference
 	lower(value) == lower(configured)
 }
 
@@ -86,7 +86,7 @@ public_internet_route(route) if {
 
 privacy_public_route[route] if {
 	privacy_scoped_subnet
-	not data.allow_privacy_subnet_public_routes
+	not data.allow_privacy_subnet_public_routes # regal ignore:unresolved-reference
 	route_table := object.get(input.subnet_context, "route_table_for_subnet", null)
 	route_table != null
 	route := route_table.Routes[_]

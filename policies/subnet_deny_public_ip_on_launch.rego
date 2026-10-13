@@ -12,14 +12,14 @@ risk_templates := [{
 			"system": "https://cwe.mitre.org",
 			"external_id": "CWE-668",
 			"title": "Exposure of Resource to Wrong Sphere",
-			"url": "https://cwe.mitre.org/data/definitions/668.html"
+			"url": "https://cwe.mitre.org/data/definitions/668.html",
 		},
 		{
 			"system": "https://cwe.mitre.org",
 			"external_id": "CWE-284",
 			"title": "Improper Access Control",
-			"url": "https://cwe.mitre.org/data/definitions/284.html"
-		}
+			"url": "https://cwe.mitre.org/data/definitions/284.html",
+		},
 	],
 	"remediation": {
 		"title": "Disable automatic public IP assignment",
@@ -29,9 +29,9 @@ risk_templates := [{
 			{"title": "Review workloads launched in the subnet for existing public IP addresses"},
 			{"title": "Use private subnets with NAT, load balancers, or approved ingress paths where public addressing is not required"},
 			{"title": "Confirm security groups and NACLs restrict any remaining public-facing workloads"},
-			{"title": "Document any subnet where automatic public IP assignment remains explicitly allowed"}
-		]
-	}
+			{"title": "Document any subnet where automatic public IP assignment remains explicitly allowed"},
+		],
+	},
 }]
 
 map_public_ip_on_launch if {
@@ -43,7 +43,7 @@ map_public_ip_on_launch if {
 }
 
 violation[{"id": "subnet_public_ip_on_launch"}] if {
-	not data.allow_subnet_public_ip_on_launch
+	not data.allow_subnet_public_ip_on_launch # regal ignore:unresolved-reference
 	map_public_ip_on_launch
 }
 

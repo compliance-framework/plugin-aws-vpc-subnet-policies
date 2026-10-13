@@ -1,7 +1,7 @@
 package compliance_framework.require_tags
 
 required_tag[tag] if {
-	tag := data.required_subnet_tags[_]
+	tag := data.required_subnet_tags[_] # regal ignore:unresolved-reference
 }
 
 missing_tag[tag] if {
@@ -19,4 +19,4 @@ tag_exists(tags, tag_name) if {
 }
 
 title := "Subnet should set required tags"
-description := sprintf("Subnet tags should contain required tag keys: %s", [concat(", ", data.required_subnet_tags)])
+description := sprintf("Subnet tags should contain required tag keys: %s", [concat(", ", data.required_subnet_tags)]) # regal ignore:unresolved-reference

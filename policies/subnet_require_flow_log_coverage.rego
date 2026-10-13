@@ -7,14 +7,12 @@ risk_templates := [{
 	"likelihood_hint": "medium",
 	"impact_hint": "medium",
 	"violation_ids": ["subnet_flow_log_coverage_missing"],
-	"threat_refs": [
-		{
-			"system": "https://cwe.mitre.org",
-			"external_id": "CWE-778",
-			"title": "Insufficient Logging",
-			"url": "https://cwe.mitre.org/data/definitions/778.html"
-		}
-	],
+	"threat_refs": [{
+		"system": "https://cwe.mitre.org",
+		"external_id": "CWE-778",
+		"title": "Insufficient Logging",
+		"url": "https://cwe.mitre.org/data/definitions/778.html",
+	}],
 	"remediation": {
 		"title": "Enable approved subnet network flow logging",
 		"description": "Ensure the subnet is covered by active VPC or subnet flow logs using the traffic types required by policy data.",
@@ -23,23 +21,23 @@ risk_templates := [{
 			{"title": "Configure the flow log traffic type to match the approved baseline, such as ALL where required"},
 			{"title": "Verify the flow log status is active and delivery is healthy"},
 			{"title": "Confirm the log destination is retained and monitored according to logging policy"},
-			{"title": "Re-run evidence collection to confirm coverage is detected"}
-		]
-	}
+			{"title": "Re-run evidence collection to confirm coverage is detected"},
+		],
+	},
 }]
 
 approved_flow_log_status(status) if {
-	approved := data.approved_subnet_flow_log_statuses[_]
+	approved := data.approved_subnet_flow_log_statuses[_] # regal ignore:unresolved-reference
 	upper(status) == upper(approved)
 }
 
 required_flow_log_traffic_type(traffic_type) if {
-	required := data.required_subnet_flow_log_traffic_types[_]
+	required := data.required_subnet_flow_log_traffic_types[_] # regal ignore:unresolved-reference
 	upper(traffic_type) == upper(required)
 }
 
 approved_flow_log_delivery_status(status) if {
-	approved := data.approved_subnet_flow_log_delivery_statuses[_]
+	approved := data.approved_subnet_flow_log_delivery_statuses[_] # regal ignore:unresolved-reference
 	upper(status) == upper(approved)
 }
 
@@ -65,4 +63,4 @@ violation[{"id": "subnet_flow_log_coverage_missing"}] if {
 }
 
 title := "Subnet should have flow log coverage"
-description := sprintf("Subnet should be covered by VPC or subnet flow logs with approved statuses: %s, delivery statuses: %s, and traffic types: %s", [concat(", ", data.approved_subnet_flow_log_statuses), concat(", ", data.approved_subnet_flow_log_delivery_statuses), concat(", ", data.required_subnet_flow_log_traffic_types)])
+description := sprintf("Subnet should be covered by VPC or subnet flow logs with approved statuses: %s, delivery statuses: %s, and traffic types: %s", [concat(", ", data.approved_subnet_flow_log_statuses), concat(", ", data.approved_subnet_flow_log_delivery_statuses), concat(", ", data.required_subnet_flow_log_traffic_types)]) # regal ignore:unresolved-reference
