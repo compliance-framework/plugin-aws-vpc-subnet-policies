@@ -1,0 +1,5 @@
+lisa-selfreview:
+Pass 1 (core, rego-policy rules): approve, no findings. Diff is opa fmt output, 20 line-scoped
+unresolved-reference ignores for data.json keys, the count -> available rename (var-shadows-builtin),
+and the workflow swap. Pre-existing Rego issues (violation[{}] without ids, no METADATA, package names
+not matching file stems) are out of scope for this task and listed in the PR body instead.
